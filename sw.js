@@ -1,6 +1,6 @@
 // Offline cache. Serves from cache immediately and refreshes the cache in the background,
 // so a new deploy reaches the phone on the next launch without bumping a version by hand.
-const CACHE = 'ft-shell-v1';
+const CACHE = 'ft-shell-v2';
 const SHELL = [
   './',
   'index.html',
@@ -9,6 +9,7 @@ const SHELL = [
   'js/theory.js',
   'js/drills.js',
   'js/session.js',
+  'js/exercise.js',
   'data/patterns.json',
   'manifest.webmanifest',
   'icons/icon-180.png',

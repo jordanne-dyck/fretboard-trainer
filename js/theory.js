@@ -83,6 +83,55 @@ export function fretsFor(note, string, minFret, maxFret) {
   return out;
 }
 
+// ---------- scales ----------
+// Degrees are relative to the major scale on the same tonic, so A natural minor's b3 is C.
+
+export const SCALES = [
+  { id: 'major', name: 'Major', degrees: ['1', '2', '3', '4', '5', '6', '7'] },
+  { id: 'minor', name: 'Natural minor', degrees: ['1', '2', 'b3', '4', '5', 'b6', 'b7'] },
+  { id: 'majpent', name: 'Major pentatonic', degrees: ['1', '2', '3', '5', '6'] },
+  { id: 'minpent', name: 'Minor pentatonic', degrees: ['1', 'b3', '4', '5', 'b7'] },
+  // 'b5|#4': the blue note is b5 unless that needs a double flat, then #4 (Eb blues has A, not Bbb).
+  { id: 'blues', name: 'Blues', degrees: ['1', 'b3', '4', 'b5|#4', '5', 'b7'] },
+  { id: 'harmmin', name: 'Harmonic minor', degrees: ['1', '2', 'b3', '4', '5', 'b6', '7'] },
+  { id: 'dorian', name: 'Dorian', degrees: ['1', '2', 'b3', '4', '5', '6', 'b7'] },
+  { id: 'phrygian', name: 'Phrygian', degrees: ['1', 'b2', 'b3', '4', '5', 'b6', 'b7'] },
+  { id: 'lydian', name: 'Lydian', degrees: ['1', '2', '3', '#4', '5', '6', '7'] },
+  { id: 'mixolydian', name: 'Mixolydian', degrees: ['1', '2', '3', '4', '5', '6', 'b7'] },
+  { id: 'locrian', name: 'Locrian', degrees: ['1', 'b2', 'b3', '4', 'b5', 'b6', 'b7'] },
+];
+
+export const scaleById = (id) => SCALES.find((s) => s.id === id);
+
+// Pitch classes in circle-of-fifths order: the order keys run in.
+export const FIFTHS = [0, 7, 2, 9, 4, 11, 6, 1, 8, 3, 10, 5];
+
+const TONIC_SPELLINGS = [['C'], ['C#', 'Db'], ['D'], ['D#', 'Eb'], ['E'], ['F'], ['F#', 'Gb'], ['G'], ['G#', 'Ab'], ['A'], ['A#', 'Bb'], ['B']];
+
+// A degree may list alternatives ('b5|#4'); use the first that spells with one accidental at most.
+export function resolveDegree(tonic, degree) {
+  const options = degree.split('|');
+  return options.find((d) => Math.abs(parseNote(spellDegree(tonic, d)).acc) <= 1) ?? options[0];
+}
+
+export function scaleNotes(scale, tonic) {
+  return scale.degrees.map((d) => spellDegree(tonic, resolveDegree(tonic, d)));
+}
+
+// Pick the tonic spelling with the fewest accidentals and no double accidentals.
+// This lands on conventional keys without a lookup table: Db major, C# minor, G# minor, Eb minor.
+// Ties go to the spelling in KEYS (so F# major over Gb, Eb minor over D#).
+export function tonicFor(scale, pc) {
+  let best = null;
+  for (const t of TONIC_SPELLINGS[pc]) {
+    const accs = scaleNotes(scale, t).map((n) => Math.abs(parseNote(n).acc));
+    if (Math.max(...accs) > 1) continue;
+    const score = accs.reduce((a, b) => a + b, 0);
+    if (!best || score < best.score || (score === best.score && KEYS.includes(t))) best = { t, score };
+  }
+  return best.t;
+}
+
 // Display form: real sharp and flat glyphs. Lowercase b is only ever an accidental.
 export function pretty(s) {
   return String(s).replace(/#/g, '♯').replace(/b/g, '♭');

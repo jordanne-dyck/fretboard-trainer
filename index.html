@@ -19,14 +19,10 @@
 
   <section id="start" class="screen">
     <h1>Fretboard Trainer</h1>
-    <p class="lead">Pick a length. The session runs itself.</p>
-    <div class="lengths">
-      <button class="length" data-min="20">20<span>min</span></button>
-      <button class="length" data-min="35">35<span>min</span></button>
-      <button class="length" data-min="60">60<span>min</span></button>
-    </div>
-    <div class="frets">
-      <div class="frets-label">Frets in exercises</div>
+    <p class="lead">Set it up once. It runs to the end without asking anything.</p>
+    <div id="setup" class="setup"></div>
+    <div class="frets" data-show="ladder mixed">
+      <div class="row-label">Frets</div>
       <div class="frets-row">
         <div class="stepper">
           <span class="stepper-label">From</span>
@@ -43,7 +39,11 @@
       </div>
       <p class="hint" id="fret-hint"></p>
     </div>
-    <p class="hint" id="wake-hint" hidden>This browser can't keep the screen on. Raise auto-lock in phone settings before a session.</p>
+    <p class="hint" id="wake-hint" hidden>This browser can't keep the screen on. Raise auto-lock in phone settings before practising.</p>
+    <div class="start-bar">
+      <div id="summary" class="summary"></div>
+      <button id="go" class="go">Start</button>
+    </div>
   </section>
 
   <section id="card" class="screen" hidden>

@@ -2,16 +2,21 @@
 
 A daily guitar fretboard practice app. Installable web app, phone first, works offline.
 
-Pick 20, 35 or 60 minutes. The app runs a randomised session of timed blocks and ends on time. You never pick the next exercise.
+Pick an exercise and its settings. It runs to a visible end, one prompt at a time, with no decisions once it starts. The last setup is remembered, so repeating yesterday is one tap.
 
-## Phase 0 (current)
+## Exercises (Phase 0)
 
-- **Degree call** — a key plus a degree or a note. Name the other.
-- **Ladder** — the major scale in patterned sequences (linear, groups of 3 and 4, thirds, pivot), up and down, in one position or along a string pair.
-- Self-marked: got it / slow / missed.
-- Fret range adjustable before each session (default 0–20).
+- **Scale ladder.** A scale in a pattern (linear, groups of 3 or 4, thirds, pivot), on any of 11 scales: major, natural minor, major and minor pentatonic, blues, harmonic minor, and the modes. You choose the response (play, play and say degrees, or play and say notes), the direction, one position or along a string pair, the keys and the number of passes.
+- **Degree call.** A key plus a degree or a note; name the other. Needs no guitar.
+- **Mixed session.** 20, 35 or 60 minutes of app-chosen, randomised blocks.
 
-Coming next: pitch detection (Phase 1), scoring and high scores (2), adaptive drills (3), voice answers (4).
+All exercises are self-marked for now (got it / slow / missed). Pitch detection arrives in Phase 1, scoring in Phase 2, adaptive drills in Phase 3, voice answers in Phase 4.
+
+## On an iPhone
+
+Open the site in Safari → Share → **Add to Home Screen**, then launch it from the icon. It works offline after the first launch.
+
+If the screen locks during practice, the keep-awake feature isn't supported on that iOS version. Set Settings → Display & Brightness → Auto-Lock → Never while practising.
 
 ## Run locally
 

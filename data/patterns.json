@@ -1,9 +1,10 @@
 {
+  "_format": "Steps are scale steps, not major-scale degrees, so every pattern works on every scale. 'cell' is a shape repeated from each step up to the octave (groups of 3 = [0,1,2]). 'seq' is a literal 1-based step sequence where step 1 is the root.",
   "patterns": [
-    { "id": "linear",  "name": "Linear",      "seq": [1,2,3,4,5,6,7,8] },
-    { "id": "groups3", "name": "Groups of 3", "seq": [1,2,3, 2,3,4, 3,4,5, 4,5,6, 5,6,7, 6,7,8], "group": 3 },
-    { "id": "groups4", "name": "Groups of 4", "seq": [1,2,3,4, 2,3,4,5, 3,4,5,6, 4,5,6,7, 5,6,7,8], "group": 4 },
-    { "id": "thirds",  "name": "Thirds",      "seq": [1,3, 2,4, 3,5, 4,6, 5,7, 6,8], "group": 2 },
+    { "id": "linear",  "name": "Linear",      "cell": [0] },
+    { "id": "groups3", "name": "Groups of 3", "cell": [0, 1, 2] },
+    { "id": "groups4", "name": "Groups of 4", "cell": [0, 1, 2, 3] },
+    { "id": "thirds",  "name": "Thirds",      "cell": [0, 2] },
     { "id": "pivot",   "name": "Pivot",       "seq": [1,2,3,2, 1,2,3,4, 3,2, 3,4,5], "confirm": true }
   ]
 }

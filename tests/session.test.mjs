@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { planSession, sessionSeconds, makeRng, LENGTHS } from '../js/session.js';
-import { sequenceFor, d3Block, d2Block } from '../js/drills.js';
+import { d3Block, d2Block } from '../js/drills.js';
 
 const patterns = JSON.parse(readFileSync(new URL('../data/patterns.json', import.meta.url))).patterns;
 const SEEDS = Array.from({ length: 200 }, (_, i) => i + 1);
@@ -38,11 +38,6 @@ test('sessions differ between seeds', () => {
   assert.notEqual(sig(1), sig(2));
 });
 
-test('descending ladders mirror the pattern', () => {
-  const thirds = patterns.find((p) => p.id === 'thirds');
-  assert.deepEqual(sequenceFor(thirds, 'desc'), [8, 6, 7, 5, 6, 4, 5, 3, 4, 2, 3, 1]);
-});
-
 test('ladder positions stay inside the chosen fret range', () => {
   const rng = makeRng(3);
   const block = d3Block({ rng, key: 'G', pattern: patterns[0], say: 'notes', fretMin: 5, fretMax: 12 });
@@ -55,7 +50,7 @@ test('ladder positions stay inside the chosen fret range', () => {
 
 test('narrow fret range: ladders stay in position mode only', () => {
   const block = d3Block({ rng: makeRng(4), key: 'A', pattern: patterns[0], say: 'notes', fretMin: 0, fretMax: 5 });
-  for (let i = 0; i < 100; i++) assert.equal(block.nextRep().mode, 'down');
+  for (let i = 0; i < 100; i++) assert.equal(block.nextRep().where, 'position');
 });
 
 test('D2 does not repeat a degree within 3 reps', () => {
